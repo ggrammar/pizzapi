@@ -7,6 +7,7 @@ MENU_URL = ('https://order.dominos.com/power/store/{storeID}/menu?'
 FIND_URL = ('https://order.dominos.com/power/store-locator?'
             's={line1}&c={line2}&type={type}')
 
+
 class Store(object):
     def __init__(self, data={}):
         self.id = data.get('StoreID')
