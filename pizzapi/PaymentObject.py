@@ -1,5 +1,6 @@
 import re
 
+
 class PaymentObject(object):
     def __init__(self, number='', expiration='', cvv='', zip=''):
         self.name = ''
