@@ -1,4 +1,4 @@
-from dominos_pizza import *
+from pizzapi import *
 import json
 
 print 'Creating Customer...'

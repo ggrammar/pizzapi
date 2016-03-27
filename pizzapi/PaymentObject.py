@@ -25,4 +25,3 @@ class PaymentObject(object):
                     'ENROUTE': r'^(?:2014|2149)\d{11}$'}
         return next((card_type for card_type, pattern in patterns.items()
                      if re.match(pattern, self.number)), '')
-p
