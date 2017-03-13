@@ -1,16 +1,13 @@
+from urls import TRACK_BY_PHONE, TRACK_BY_ORDER
 from utils import request_xml, request_json
-import requests
-import xmltodict
 
-TRACK_BY_ID = ('https://trkweb.dominos.com/orderstorage/GetTrackerData?'
-               'StoreID={storeId}&OrderKey={orderKey}')
-TRACK_BY_PHONE = ('https://trkweb.dominos.com/orderstorage/GetTrackerData?'
-                  'Phone={phone}')
 
 def track_by_phone(phone):
-    data = request_xml(TRACK_BY_PHONE, phone=str(phone).strip())
-    response = data['soap:Envelope']['soap:Body']['GetTrackerDataResponse']
-    return response['OrderStatuses']['OrderStatus']
+    phone = str(phone).strip()
+    data = request_xml(TRACK_BY_PHONE, phone=phone)['soap:Envelope']['soap:Body']
+    response = data['GetTrackerDataResponse']['OrderStatuses']['OrderStatus']
+    return response
 
-def track_by_id(store_id, order_key):
-    return request_json(TRACK_BY_ID, storeID=store_id, orderKey=order_key)
+
+def track_by_order(store_id, order_key):
+    return request_json(TRACK_BY_ORDER, store_id=store_id, order_key=order_key)

@@ -1,4 +1,5 @@
-import json
+from urls import MENU_URL
+from utils import request_json
 
 
 # TODO: Get rid of this class
@@ -37,6 +38,12 @@ class Menu(object):
             for key, value in data['Categorization'].iteritems():
                 self.root_categories[key] = self.build_categories(value)
 
+    @classmethod
+    def from_store(cls, store_id, lang='en'):
+        response = request_json(MENU_URL, store_id=store_id, lang=lang)
+        menu = cls(response)
+        return menu
+
     # TODO: Reconfigure structure to show that Codes (not ProductCodes) matter
     def build_categories(self, category_data, parent=None):
         category = MenuCategory(category_data, parent)
@@ -45,8 +52,7 @@ class Menu(object):
             category.subcategories.append(new_subcategory)
         for product_code in category_data['Products']:
             if product_code not in self.menu_by_code:
-                msg = 'PRODUCT NOT FOUND: %s %s'
-                raise Exception(msg % (product_code, category.code))
+                raise Exception('PRODUCT NOT FOUND: %s %s' % (product_code, category.code))
             product = self.menu_by_code[product_code]
             category.products.append(product)
             product.categories.append(category)
@@ -84,12 +90,11 @@ class Menu(object):
     def search(self, **conditions):
         max_len = lambda x: 2 + max(len(v[x]) for v in self.variants.values())
         for v in self.variants.itervalues():
-            e = v.copy()
-            e['Toppings'] = eval('dict(' + v['Tags']['DefaultToppings'] + ')')
+            v['Toppings'] = dict(x.split('=', 1) for x in v['Tags']['DefaultToppings'].split(',') if x)
             if all(y in e.get(x, '') for x, y in conditions.iteritems()):
-                print e['Code'].ljust(max_len('Code')),
-                print e['Name'].ljust(max_len('Name')),
-                print ('$' + e['Price']).ljust(max_len('Price')),
-                print e['SizeCode'].ljust(max_len('SizeCode')),
-                print e['ProductCode'].ljust(max_len('ProductCode')),
-                print e['Tags']['DefaultToppings']
+                print v['Code'],
+                print v['Name'],
+                print '$' + v['Price'],
+                print v['SizeCode'],
+                print v['ProductCode'],
+                print v['Toppings']

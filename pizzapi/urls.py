@@ -1,0 +1,8 @@
+FIND_URL = 'https://order.dominos.com/power/store-locator?s={line1}&c={line2}&type={type}'
+INFO_URL = 'https://order.dominos.com/power/store/{store_id}/profile'
+MENU_URL = 'https://order.dominos.com/power/store/{store_id}/menu?lang={lang}&structured=true'
+PLACE_URL = 'https://order.dominos.com/power/place-order'
+PRICE_URL = 'https://order.dominos.com/power/price-order'
+TRACK_BY_ORDER = 'https://trkweb.dominos.com/orderstorage/GetTrackerData?StoreID={store_id}&OrderKey={order_key}'
+TRACK_BY_PHONE = 'https://trkweb.dominos.com/orderstorage/GetTrackerData?Phone={phone}'
+VALIDATE_URL = 'https://order.dominos.com/power/validate-order'
