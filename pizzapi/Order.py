@@ -1,10 +1,9 @@
-from utils import request_json
 import requests
-import json
 
 VALIDATE_URL = 'https://order.dominos.com/power/validate-order'
 PRICE_URL = 'https://order.dominos.com/power/price-order'
 PLACE_URL = 'https://order.dominos.com/power/place-order'
+
 
 # TODO: Add add_coupon and remove_coupon methods
 class Order(object):

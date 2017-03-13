@@ -1,4 +1,4 @@
-from dominos_pizza import *
+from pizzapi import *
 import json
 
 print 'Creating Customer...'
@@ -13,12 +13,16 @@ order = Order(store, customer)
 
 print 'Searching the store\'s Menu for 12" Handmade pizzas...'
 menu = store.get_menu()
-menu.search(SizeCode='12', Name='Handmade')
+menu.search(Name='Pan Pizza', SizeCode='12')
+menu.search(Name='Marinara')
+menu.search(Name='Coke')
 
-print 'Prompting for Items to order...'
-for item in raw_input('Add Items: ').split():
-    added = order.add_item(item.upper())
-    print 'Added item:', added['Name']
+order.add_item('P12IPAZA')
+order.add_item('MARINARA')
+order.add_item('2LCOKE')
+
+order.remove_item('2LCOKE')
+order.add_item('20BCOKE')
 
 print 'Creating the PaymentObject...'
 card = PaymentObject('4100123422343234', '0115', '777', '90210')

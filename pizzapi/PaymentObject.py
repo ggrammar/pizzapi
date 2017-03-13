@@ -1,5 +1,6 @@
 import re
 
+
 class PaymentObject(object):
     def __init__(self, number='', expiration='', cvv='', zip=''):
         self.name = ''
@@ -11,7 +12,8 @@ class PaymentObject(object):
 
     def validate(self):
         is_valid = self.number and self.card_type and self.expiration
-        is_valid &= self.validate_cvv() and self.validate_zip()
+        is_valid &= re.match(r'^[0-9]{3,4}$', self.cvv)
+        is_valid &= re.match(r'^[0-9]{5}(?:-[0-9]{4})?$', self.zip)
         return is_valid
 
     def find_type(self):
@@ -24,9 +26,3 @@ class PaymentObject(object):
                     'ENROUTE': r'^(?:2014|2149)\d{11}$'}
         return next((card_type for card_type, pattern in patterns.items()
                      if re.match(pattern, self.number)), '')
-
-    def validate_cvv(self):
-        return re.match(r'^[0-9]{3,4}$', self.cvv)
-
-    def validate_zip(self):
-        return re.match(r'^[0-9]{5}(?:-[0-9]{4})?$', self.zip)

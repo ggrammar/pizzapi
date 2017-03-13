@@ -1,5 +1,6 @@
 import json
 
+
 # TODO: Get rid of this class
 class MenuCategory(object):
     def __init__(self, menu_data={}, parent=None):
@@ -10,9 +11,10 @@ class MenuCategory(object):
         self.code = menu_data['Code']
         self.name = menu_data['Name']
 
-    def get_category_path():
+    def get_category_path(self):
         path = '' if not self.parent else self.parent.get_category_path()
         return path + self.code
+
 
 # TODO: Get rid of this class
 class MenuItem(object):
@@ -21,6 +23,7 @@ class MenuItem(object):
         self.name = data['Name']
         self.menu_data = data
         self.categories = []
+
 
 class Menu(object):
     def __init__(self, data={}):
@@ -90,8 +93,3 @@ class Menu(object):
                 print e['SizeCode'].ljust(max_len('SizeCode')),
                 print e['ProductCode'].ljust(max_len('ProductCode')),
                 print e['Tags']['DefaultToppings']
-
-if __name__ == '__main__':
-    with open('../sample_responses/menu.json') as infile:
-        saved_data = json.load(infile)
-    menu.search(SizeCode='12', Toppings='X')

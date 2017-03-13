@@ -1,5 +1,6 @@
 from Address import Address
 
+
 class Customer(object):
     def __init__(self, fname='', lname='', email='', phone='', address=None):
         self.first_name = fname.strip()
