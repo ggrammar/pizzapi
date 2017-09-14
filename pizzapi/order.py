@@ -1,7 +1,7 @@
 import requests
 
-from menu import Menu
-from urls import PRICE_URL, PLACE_URL, VALIDATE_URL
+from .menu import Menu
+from .urls import PRICE_URL, PLACE_URL, VALIDATE_URL
 
 
 # TODO: Add add_coupon and remove_coupon methods
@@ -57,7 +57,7 @@ class Order(object):
         r.raise_for_status()
         json_data = r.json()
         if merge:
-            for key, value in json_data['Order'].iteritems():
+            for key, value in json_data['Order'].items():
                 if value or not isinstance(value, list):
                     self.data[key] = value
 

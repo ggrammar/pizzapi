@@ -1,6 +1,6 @@
-from store import Store
-from utils import request_json
-from urls import FIND_URL
+from .store import Store
+from .utils import request_json
+from .urls import FIND_URL
 
 class Address(object):
     def __init__(self, street, city, region='', zip=''):

@@ -24,5 +24,5 @@ class PaymentObject(object):
                     'DISCOVER': r'^6(?:011|5[0-9]{2})[0-9]{12}$',
                     'JCB': r'^(?:2131|1800|35\d{3})\d{11}$',
                     'ENROUTE': r'^(?:2014|2149)\d{11}$'}
-        return next((card_type for card_type, pattern in patterns.items()
+        return next((card_type for card_type, pattern in list(patterns.items())
                      if re.match(pattern, self.number)), '')
