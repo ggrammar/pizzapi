@@ -3,7 +3,7 @@ from .utils import request_json
 from .urls import FIND_URL
 
 class Address(object):
-    def __init__(self, street, city, region='', zip=''):
+    def __init__(self, street, city, region='', zip='', *args):
         self.street = street.strip()
         self.city = city.strip()
         self.region = region.strip()
