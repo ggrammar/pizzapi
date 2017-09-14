@@ -91,7 +91,7 @@ class Menu(object):
         max_len = lambda x: 2 + max(len(v[x]) for v in list(self.variants.values()))
         for v in self.variants.values():
             v['Toppings'] = dict(x.split('=', 1) for x in v['Tags']['DefaultToppings'].split(',') if x)
-            if all(y in e.get(x, '') for x, y in conditions.items()):
+            if all(y in v.get(x, '') for x, y in conditions.items()):
                 print(v['Code'], end=' ')
                 print(v['Name'], end=' ')
                 print('$' + v['Price'], end=' ')
