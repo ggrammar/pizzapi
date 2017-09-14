@@ -42,7 +42,7 @@ class Order(object):
             FirstName=self.customer.first_name,
             LastName=self.customer.last_name,
             Phone=self.customer.phone,
-            Address=self.customer.address.data
+            Address=self.customer.address
         )
 
         for key in ('Products', 'StoreID', 'Address'):
