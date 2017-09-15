@@ -69,4 +69,4 @@ The first steps seem unnecessary.  It seems more efficient to initalize Customer
 customer.address(...) has issues with the address coming across as a single string.  
 If you .split(',') you can pass it to Address as 
 ```address = Address(*customer.address.split(','))``` to parse it properly.  
-From there you can do```store = Address.closes_store(address) to get the nearest location.```
+From there you can do```store = Address.closes_store(address)``` to get the nearest location.
