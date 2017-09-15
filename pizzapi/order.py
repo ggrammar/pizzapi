@@ -35,6 +35,16 @@ class Order(object):
         codes = [x['Code'] for x in self.data['Products']]
         return self.data['Products'].pop(codes.index(code))
 
+    def add_coupon(self, code, qty=1):
+        item = self.menu.variants[code]
+        item.update(ID=1, isNew=True, Qty=qty, AutoRemove=False)
+        self.data['Coupons'].append(item)
+        return item
+
+    def remove_coupon(self, code):
+        codes = [x['Code'] for x in self.data['Coupons']]
+        return self.data['Coupons'].pop(codes.index(code))
+
     def _send(self, url, merge):
         self.data.update(
             StoreID=self.store.id,
@@ -79,6 +89,7 @@ class Order(object):
         """Use this instead of self.place when testing"""
         # get the price to check that everything worked okay
         response = self._send(PRICE_URL, True)
+        
         if response['Status'] == -1:
             raise Exception('get price failed: %r' % response)
 
@@ -86,11 +97,11 @@ class Order(object):
         self.data['Payments'] = [
             {
                 'Type': 'CreditCard',
-                'Experiation': self.card.expiration,
+                'Expiration': self.credit_card.expiration,
                 'Amount': self.data['Amounts'].get('Customer', 0),
-                'CardType': self.card.card_type,
-                'Number': self.card.number,
-                'SecurityCode': self.card.cvv,
-                'PostalCode': self.card.zip
+                'CardType': self.credit_card.card_type,
+                'Number': self.credit_card.number,
+                'SecurityCode': self.credit_card.cvv,
+                'PostalCode': self.credit_card.zip
             }
         ]
