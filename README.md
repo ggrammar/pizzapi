@@ -14,7 +14,7 @@ First construct a `Customer` object and set the customer's address.
 
 Then, find a store that will deliver to the address.
 ```python
->>> store = Address.closest_store(address)
+>>> store = address.closest_store()
 ```
 
 Create an `Order` object.

@@ -1,3 +1,4 @@
+from __future__ import print_function
 from .urls import MENU_URL
 from .utils import request_json
 
