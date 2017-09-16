@@ -6,11 +6,17 @@ from .urls import PRICE_URL, PLACE_URL, VALIDATE_URL
 
 # TODO: Add add_coupon and remove_coupon methods
 class Order(object):
-    def __init__(self, store, customer):
+    def __init__(self, store, customer, address):
         self.store = store
         self.menu = Menu.from_store(store_id=store.id)
         self.customer = customer
+        self.address = address
         self.data = {
+            'Address': {'Street': self.address.street,
+                        'City': self.address.city,
+                        'Region': self.address.region,
+                        'PostalCode': self.address.zip,
+                        'Type': 'House'},
             'Coupons': [], 'CustomerID': '', 'Extension': '',
             'OrderChannel': 'OLO', 'OrderID': '', 'NoCombine': True,
             'OrderMethod': 'Web', 'OrderTaker': None, 'Payments': [],
@@ -20,7 +26,7 @@ class Order(object):
             'Partners': {}, 'NewUser': True, 'metaData': {}, 'Amounts': {},
             'BusinessDate': '', 'EstimatedWaitMinutes': '',
             'PriceOrderTime': '', 'AmountsBreakdown': {}
-        }
+            }
 
     # TODO: Implement item options
     # TODO: Add exception handling for KeyErrors
@@ -52,7 +58,8 @@ class Order(object):
             FirstName=self.customer.first_name,
             LastName=self.customer.last_name,
             Phone=self.customer.phone,
-            Address=self.customer.address
+            #Address=self.address.street
+
         )
 
         for key in ('Products', 'StoreID', 'Address'):
@@ -63,14 +70,15 @@ class Order(object):
             'Referer': 'https://order.dominos.com/en/pages/order/',
             'Content-Type': 'application/json'
         }
+
         r = requests.post(url=url, headers=headers, json={'Order': self.data})
         r.raise_for_status()
         json_data = r.json()
+
         if merge:
             for key, value in json_data['Order'].items():
                 if value or not isinstance(value, list):
                     self.data[key] = value
-
         return json_data
 
     # TODO: Figure out if this validates anything that PRICE_URL does not
@@ -92,7 +100,6 @@ class Order(object):
         
         if response['Status'] == -1:
             raise Exception('get price failed: %r' % response)
-
         self.credit_card = card
         self.data['Payments'] = [
             {
@@ -100,8 +107,8 @@ class Order(object):
                 'Expiration': self.credit_card.expiration,
                 'Amount': self.data['Amounts'].get('Customer', 0),
                 'CardType': self.credit_card.card_type,
-                'Number': self.credit_card.number,
-                'SecurityCode': self.credit_card.cvv,
-                'PostalCode': self.credit_card.zip
+                'Number': int(self.credit_card.number),
+                'SecurityCode': int(self.credit_card.cvv),
+                'PostalCode': int(self.credit_card.zip)
             }
         ]

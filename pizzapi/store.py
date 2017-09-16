@@ -5,7 +5,7 @@ from .utils import request_json
 
 class Store(object):
     def __init__(self, data={}):
-        self.id = int(data.get('StoreID', -1))
+        self.id = str(data.get('StoreID', -1))
         self.data = data
 
     def get_details(self):
