@@ -19,7 +19,7 @@ Then, find a store that will deliver to the address.
 
 Create an `Order` object.
 ```python
->>> order = Order(store, customer)
+>>> order = Order(store, customer, address)
 ```
 
 In order to add items to your order, you'll need the items' product codes.  
