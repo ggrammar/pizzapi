@@ -1,11 +1,11 @@
-from menu import Menu
-from urls import INFO_URL, MENU_URL
-from utils import request_json
+from .menu import Menu
+from .urls import INFO_URL, MENU_URL
+from .utils import request_json
 
 
 class Store(object):
     def __init__(self, data={}):
-        self.id = int(data.get('StoreID', -1))
+        self.id = str(data.get('StoreID', -1))
         self.data = data
 
     def get_details(self):

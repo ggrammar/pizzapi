@@ -8,18 +8,18 @@ It's a port of [the pizzapi node.js module](https://github.com/RIAEvangelist/nod
 
 First construct a `Customer` object and set the customer's address.
 ```python
->>> customer = Customer('Barack', 'Obama', 'barack@whitehouse.gov', '2024561111')
->>> customer.set_address('700 Pennsylvania Avenue NW', 'Washington', 'DC', '20408')
+>>> customer = Customer('Barack', 'Obama', 'barack@whitehouse.gov', '2024561111', '700 Pennsylvania Avenue NW, Washington, DC, 20408')
+>>> address = Address(*customer.address.split(','))
 ```
 
 Then, find a store that will deliver to the address.
 ```python
->>> store = find_closest_store(customer.address)
+>>> store = address.closest_store()
 ```
 
 Create an `Order` object.
 ```python
->>> order = Order(store, customer)
+>>> order = Order(store, customer, address)
 ```
 
 In order to add items to your order, you'll need the items' product codes.  
@@ -62,3 +62,11 @@ Or if you're just testing and don't want to actually order something, use `.pay_
 ```python
 >>> order.pay_with(card)
 ```
+```
+Notes:
+```
+The first steps seem unnecessary.  It seems more efficient to initalize Customer info and Address info seperately.  
+customer.address(...) has issues with the address coming across as a single string.  
+If you .split(',') you can pass it to Address as 
+```address = Address(*customer.address.split(','))``` to parse it properly.  
+From there you can do```store = Address.closes_store(address)``` to get the nearest location.

@@ -1,7 +1,6 @@
 import requests
 import xmltodict
 
-
 # TODO: Find out why this occasionally hangs
 def request_json(url, **kwargs):
     r = requests.get(url.format(**kwargs))

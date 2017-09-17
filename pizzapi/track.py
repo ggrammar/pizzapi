@@ -1,5 +1,5 @@
-from urls import TRACK_BY_PHONE, TRACK_BY_ORDER
-from utils import request_xml, request_json
+from .urls import TRACK_BY_PHONE, TRACK_BY_ORDER
+from .utils import request_xml, request_json
 
 
 def track_by_phone(phone):

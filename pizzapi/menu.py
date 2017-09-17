@@ -1,5 +1,6 @@
-from urls import MENU_URL
-from utils import request_json
+from __future__ import print_function
+from .urls import MENU_URL
+from .utils import request_json
 
 
 # TODO: Get rid of this class
@@ -35,7 +36,7 @@ class Menu(object):
             self.products = self.parse_items(data['Products'])
             self.coupons = self.parse_items(data['Coupons'])
             self.preconfigured = self.parse_items(data['PreconfiguredProducts'])
-            for key, value in data['Categorization'].iteritems():
+            for key, value in data['Categorization'].items():
                 self.root_categories[key] = self.build_categories(value)
 
     @classmethod
@@ -60,7 +61,7 @@ class Menu(object):
 
     def parse_items(self, parent_data):
         items = []
-        for code in parent_data.iterkeys():
+        for code in parent_data.keys():
             obj = MenuItem(parent_data[code])
             self.menu_by_code[obj.code] = obj
             items.append(obj)
@@ -71,16 +72,16 @@ class Menu(object):
         def print_category(category, depth=1):
             indent = "  " * (depth + 1)
             if len(category.products) + len(category.subcategories) > 0:
-                print indent + category.name
+                print(indent + category.name)
                 for subcategory in category.subcategories:
                     print_category(subcategory, depth + 1)
                 for product in category.products:
-                    print indent + "  [%s]" % product.code, product.name
-        print "************ Coupon Menu ************"
+                    print(indent + "  [%s]" % product.code, product.name)
+        print("************ Coupon Menu ************")
         print_category(self.root_categories['Coupons'])
-        print "\n************ Preconfigured Menu ************"
+        print("\n************ Preconfigured Menu ************")
         print_category(self.root_categories['PreconfiguredProducts'])
-        print "\n************ Regular Menu ************"
+        print("\n************ Regular Menu ************")
         print_category(self.root_categories['Food'])
 
     # TODO: Find more pythonic way to format the menu
@@ -88,13 +89,13 @@ class Menu(object):
     # TODO: Return the search results and print in different method
     # TODO: Import fuzzy search module or allow lists as search conditions
     def search(self, **conditions):
-        max_len = lambda x: 2 + max(len(v[x]) for v in self.variants.values())
-        for v in self.variants.itervalues():
+        max_len = lambda x: 2 + max(len(v[x]) for v in list(self.variants.values()))
+        for v in self.variants.values():
             v['Toppings'] = dict(x.split('=', 1) for x in v['Tags']['DefaultToppings'].split(',') if x)
-            if all(y in e.get(x, '') for x, y in conditions.iteritems()):
-                print v['Code'],
-                print v['Name'],
-                print '$' + v['Price'],
-                print v['SizeCode'],
-                print v['ProductCode'],
-                print v['Toppings']
+            if all(y in v.get(x, '') for x, y in conditions.items()):
+                print(v['Code'], end=' ')
+                print(v['Name'], end=' ')
+                print('$' + v['Price'], end=' ')
+                print(v['SizeCode'], end=' ')
+                print(v['ProductCode'], end=' ')
+                print(v['Toppings'])
