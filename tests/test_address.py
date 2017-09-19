@@ -64,7 +64,7 @@ def test_address_closest_store(mocked, street, city, region, zip):
 
     store = address.closest_store()
     assert_that(store, has_properties(
-        id=4336,
+        id='4336',
         data=has_entries(
             AddressDescription='1300 L St Nw\nWashington, DC 20005',
             AllowCarryoutOrders=True,
