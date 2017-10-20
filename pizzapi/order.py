@@ -1,16 +1,17 @@
 import requests
 
 from .menu import Menu
-from .urls import PRICE_URL, PLACE_URL, VALIDATE_URL
+from .urls import Urls, COUNTRY_USA 
 
 
 # TODO: Add add_coupon and remove_coupon methods
 class Order(object):
-    def __init__(self, store, customer, address):
+    def __init__(self, store, customer, address, country=COUNTRY_USA):
         self.store = store
-        self.menu = Menu.from_store(store_id=store.id)
+        self.menu = Menu.from_store(store_id=store.id, country=country)
         self.customer = customer
         self.address = address
+        self.urls = Urls(country)
         self.data = {
             'Address': {'Street': self.address.street,
                         'City': self.address.city,
@@ -81,22 +82,22 @@ class Order(object):
                     self.data[key] = value
         return json_data
 
-    # TODO: Figure out if this validates anything that PRICE_URL does not
+    # TODO: Figure out if this validates anything that self.urls.price_url() does not
     def validate(self):
-        response = self._send(VALIDATE_URL, True)
+        response = self._send(self.urls.validate_url(), True)
         return response['Status'] != -1
 
     # TODO: Actually test this
     def place(self, card):
         self.pay_with(card)
-        response = self._send(PLACE_URL, False)
+        response = self._send(self.urls.place_url(), False)
         return response
 
     # TODO: Add self.price() and update whenever called and items were changed
     def pay_with(self, card):
         """Use this instead of self.place when testing"""
         # get the price to check that everything worked okay
-        response = self._send(PRICE_URL, True)
+        response = self._send(self.urls.price_url(), True)
         
         if response['Status'] == -1:
             raise Exception('get price failed: %r' % response)

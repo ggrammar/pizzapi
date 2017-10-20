@@ -6,7 +6,7 @@ from mock import patch
 from pytest import mark
 
 from pizzapi.address import Address
-from pizzapi.urls import FIND_URL
+from pizzapi.urls import Urls, COUNTRY_USA
 
 
 fixture_path = os.path.join('tests', 'fixtures', 'stores.json')
@@ -25,7 +25,8 @@ address_params = mark.parametrize(
 
 
 def mocked_request_json(url, **kwargs):
-    assert_that(url, equal_to(FIND_URL))
+
+    assert_that(url, equal_to(Urls(COUNTRY_USA).find_url()))
     assert_that(kwargs, has_entries(
         line1='700 Pennsylvania Avenue NW',
         line2='Washington, DC, 20408',

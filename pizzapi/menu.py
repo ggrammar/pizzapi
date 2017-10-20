@@ -1,5 +1,5 @@
 from __future__ import print_function
-from .urls import MENU_URL
+from .urls import Urls, COUNTRY_USA
 from .utils import request_json
 
 
@@ -28,10 +28,12 @@ class MenuItem(object):
 
 
 class Menu(object):
-    def __init__(self, data={}):
+    def __init__(self, data={}, country=COUNTRY_USA):
         self.variants = data.get('Variants', {})
         self.menu_by_code = {}
         self.root_categories = {}
+        self.country = COUNTRY_USA
+
         if self.variants:
             self.products = self.parse_items(data['Products'])
             self.coupons = self.parse_items(data['Coupons'])
@@ -40,8 +42,8 @@ class Menu(object):
                 self.root_categories[key] = self.build_categories(value)
 
     @classmethod
-    def from_store(cls, store_id, lang='en'):
-        response = request_json(MENU_URL, store_id=store_id, lang=lang)
+    def from_store(self, cls, store_id, lang='en', country=COUNTRY_USA):
+        response = request_json(Urls(country).menu_url(), store_id=store_id, lang=lang)
         menu = cls(response)
         return menu
 
