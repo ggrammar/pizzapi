@@ -88,28 +88,35 @@ class Order(object):
         return response['Status'] != -1
 
     # TODO: Actually test this
-    def place(self, card):
+    def place(self, card=False):
         self.pay_with(card)
         response = self._send(self.urls.place_url(), False)
         return response
 
     # TODO: Add self.price() and update whenever called and items were changed
-    def pay_with(self, card):
+    def pay_with(self, card=False):
         """Use this instead of self.place when testing"""
         # get the price to check that everything worked okay
         response = self._send(self.urls.price_url(), True)
         
         if response['Status'] == -1:
             raise Exception('get price failed: %r' % response)
-        self.credit_card = card
-        self.data['Payments'] = [
-            {
-                'Type': 'CreditCard',
-                'Expiration': self.credit_card.expiration,
-                'Amount': self.data['Amounts'].get('Customer', 0),
-                'CardType': self.credit_card.card_type,
-                'Number': int(self.credit_card.number),
-                'SecurityCode': int(self.credit_card.cvv),
-                'PostalCode': int(self.credit_card.zip)
-            }
-        ]
+
+        if card == False:
+            self.data['Payments'] = [
+                {
+                    'Type': 'DebitDoor',
+                }
+            ]
+        else:
+            self.data['Payments'] = [
+                {
+                    'Type': 'CreditCard',
+                    'Expiration': self.credit_card.expiration,
+                    'Amount': self.data['Amounts'].get('Customer', 0),
+                    'CardType': self.credit_card.card_type,
+                    'Number': int(self.credit_card.number),
+                    'SecurityCode': int(self.credit_card.cvv),
+                    'PostalCode': int(self.credit_card.zip)
+                }
+            ]
