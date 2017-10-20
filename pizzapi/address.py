@@ -1,13 +1,15 @@
 from .store import Store
 from .utils import request_json
-from .urls import FIND_URL
+from .urls import Urls, COUNTRY_USA
 
 class Address(object):
-    def __init__(self, street, city, region='', zip='', *args):
+    def __init__(self, street, city, region='', zip='', country=COUNTRY_USA, *args):
         self.street = street.strip()
         self.city = city.strip()
         self.region = region.strip()
         self.zip = str(zip).strip()
+        self.urls = Urls(country)
+        self.country = country
 
     @property
     def data(self):
@@ -23,8 +25,8 @@ class Address(object):
         return '{City}, {Region}, {PostalCode}'.format(**self.data)
 
     def nearby_stores(self, service='Delivery'):
-        data = request_json(FIND_URL, line1=self.line1, line2=self.line2, type=service)
-        return [Store(x) for x in data['Stores']
+        data = request_json(self.urls.find_url(), line1=self.line1, line2=self.line2, type=service)
+        return [Store(x, self.country) for x in data['Stores']
                 if x['IsOnlineNow'] and x['ServiceIsOpen'][service]]
 
     def closest_store(self, service='Delivery'):
