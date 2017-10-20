@@ -7,7 +7,7 @@ class Address(object):
         self.street = street.strip()
         self.city = city.strip()
         self.region = region.strip()
-        self.zip = str(zip).strip(),
+        self.zip = str(zip).strip()
         self.urls = Urls(country)
         self.country = country
 
