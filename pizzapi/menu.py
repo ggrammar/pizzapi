@@ -42,7 +42,7 @@ class Menu(object):
                 self.root_categories[key] = self.build_categories(value)
 
     @classmethod
-    def from_store(self, cls, store_id, lang='en', country=COUNTRY_USA):
+    def from_store(cls, store_id, lang='en', country=COUNTRY_USA):
         response = request_json(Urls(country).menu_url(), store_id=store_id, lang=lang)
         menu = cls(response)
         return menu
