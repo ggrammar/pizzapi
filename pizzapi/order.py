@@ -105,7 +105,7 @@ class Order(object):
         if card == False:
             self.data['Payments'] = [
                 {
-                    'Type': 'DebitDoor',
+                    'Type': 'Cash',
                 }
             ]
         else:
