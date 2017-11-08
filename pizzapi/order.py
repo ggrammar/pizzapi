@@ -8,7 +8,7 @@ from .urls import Urls, COUNTRY_USA
 class Order(object):
     def __init__(self, store, customer, address, country=COUNTRY_USA):
         self.store = store
-        self.menu = Menu.from_store(store_id=store.id, country=country)
+        self.menu = store.get_menu()
         self.customer = customer
         self.address = address
         self.urls = Urls(country)
