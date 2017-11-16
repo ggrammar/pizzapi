@@ -2,6 +2,7 @@ from .store import Store
 from .utils import request_json
 from .urls import Urls, COUNTRY_USA
 
+
 class Address(object):
     def __init__(self, street, city, region='', zip='', country=COUNTRY_USA, *args):
         self.street = street.strip()
@@ -32,5 +33,9 @@ class Address(object):
     def closest_store(self, service='Delivery'):
         stores = self.nearby_stores(service=service)
         if not stores:
-            raise Exception('No local stores are currently open')
+            raise StoreException('No local stores are currently open')
         return stores[0]
+
+
+class StoreException(Exception):
+    pass

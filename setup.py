@@ -13,16 +13,16 @@ setup(
     # Versions should comply with PEP440.  For a discussion on single-sourcing
     # the version across setup.py and the project code, see
     # https://packaging.python.org/en/latest/single_source_version.html
-    version='0.0.2',
+    version='0.0.3',
 
     description='A Python wrapper for the Dominos Pizza API',
 
     # The project's main homepage.
-    url='https://github.com/aluttik/pizzapi',
+    url='https://github.com/wardcraigj/pizzapi',
 
     # Author details
-    author='aluttik',
-    author_email='',
+    author='wardcraigj forked from aluttik',
+    author_email='ward.craig.j@gmail.com',
 
     # What does your project relate to?
     keywords='dominos pizza api',

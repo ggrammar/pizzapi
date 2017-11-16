@@ -65,7 +65,7 @@ class Order(object):
 
         for key in ('Products', 'StoreID', 'Address'):
             if key not in self.data or not self.data[key]:
-                raise Exception('order has invalid value for key "%s"' % key)
+                raise OrderException('order has invalid value for key "%s"' % key)
 
         headers = {
             'Referer': 'https://order.dominos.com/en/pages/order/',
@@ -100,9 +100,9 @@ class Order(object):
         response = self._send(self.urls.price_url(), True)
         
         if response['Status'] == -1:
-            raise Exception('get price failed: %r' % response)
+            raise OrderException('get price failed: %r' % response)
 
-        if card == False:
+        if card is False:
             self.data['Payments'] = [
                 {
                     'Type': 'Cash',
@@ -120,3 +120,7 @@ class Order(object):
                     'PostalCode': int(self.credit_card.zip)
                 }
             ]
+
+
+class OrderException(Exception):
+    pass
