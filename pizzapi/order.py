@@ -112,11 +112,13 @@ class Order(object):
             self.data['Payments'] = [
                 {
                     'Type': 'CreditCard',
-                    'Expiration': self.credit_card.expiration,
+                    'Expiration': card.expiration,
                     'Amount': self.data['Amounts'].get('Customer', 0),
-                    'CardType': self.credit_card.card_type,
-                    'Number': int(self.credit_card.number),
-                    'SecurityCode': int(self.credit_card.cvv),
-                    'PostalCode': int(self.credit_card.zip)
+                    'CardType': card.card_type,
+                    'Number': int(card.number),
+                    'SecurityCode': int(card.cvv),
+                    'PostalCode': int(card.zip)
                 }
             ]
+
+	return response
