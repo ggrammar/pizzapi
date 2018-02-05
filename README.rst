@@ -1,14 +1,6 @@
 pizzapi
 =======
 
-**>>> this repo is no longer being maintained <<<**
-
-I'm a busy guy and I don't even live near a Domino's anymore, so I've lost interest in this project.
-
-If you really want to use this, beware because I made it years ago as a learning expierience.
-
-You have been warned.
-
 Description
 -----------
 
