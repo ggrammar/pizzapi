@@ -129,8 +129,16 @@ setup(
     # your project is installed. For an analysis of "install_requires" vs pip's
     # requirements files see:
     # https://packaging.python.org/en/latest/requirements.html
-    install_requires=['requests', 'xmltodict'],
+    install_requires=[
+        'pyhamcrest',
+        'requests', 
+        'xmltodict',
+    ],
     include_package_data=True,
+    tests_require=[
+        'mock',
+        'pytest',
+    ],
 
     # setup.py publish support.
     cmdclass={
