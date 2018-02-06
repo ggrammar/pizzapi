@@ -28,6 +28,14 @@ class MenuItem(object):
 
 
 class Menu(object):
+    """The Menu is our primary interface with the API. 
+
+    This is far and away the most complicated class - it wraps up most of
+    the logic that parses the information we get from the API.
+
+    Next time I get pizza, there is a lot of work to be done in 
+    documenting this class.
+    """
     def __init__(self, data={}, country=COUNTRY_USA):
         self.variants = data.get('Variants', {})
         self.menu_by_code = {}

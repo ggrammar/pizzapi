@@ -4,6 +4,11 @@ from .utils import request_json
 
 
 class Store(object):
+    """The interface to the Store API
+
+    You can use this to find store information about stores near an
+    address, or to find the closest store to an address. 
+    """
     def __init__(self, data={}, country=COUNTRY_USA):
         self.id = str(data.get('StoreID', -1))
         self.country = country

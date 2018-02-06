@@ -2,6 +2,11 @@ import re
 
 
 class PaymentObject(object):
+    """A PaymentObject represents a credit card.
+
+    There's some sweet logic in here to make sure that the type of card
+    you passed is valid. 
+    """
     def __init__(self, number='', expiration='', cvv='', zip=''):
         self.name = ''
         self.number = str(number).strip()
