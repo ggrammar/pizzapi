@@ -2,6 +2,13 @@ COUNTRY_USA = 'us'
 COUNTRY_CANADA = 'ca'
 
 class Urls(object):
+    """URLs for doing different things to the API.
+
+    This initializes some dicts that contain country-unique information
+    on how to interact with the API, and some getter methods for getting
+    to that information. These are handy to pass as a first argument to
+    pizzapi.utils.request_[xml|json]. 
+    """
     def __init__(self, country=COUNTRY_USA):
 
         self.country = country
