@@ -45,8 +45,22 @@ class Address(object):
         nearby_stores will filter the information we receive from the API
         to exclude stores that are not currently online (!['IsOnlineNow']),
         and stores that are not currently in service (!['ServiceIsOpen']).
+
+        (city and region) or (postalcode) is required to get a result from
+        the API. This is enforced in the tests, but not in these methods,
+        since the API might change in the future. 
         """
-        data = request_json(self.urls.find_url(), line1=self.line1, line2=self.line2, type=service)
+        data = request_json(
+            self.urls.find_url(), 
+            line1=self.line1, 
+            line2=self.line2, 
+            type=service
+        )
+
+        if data['Status'] == -1:
+            # This is an error from the Domino's API. 
+            raise Exception(data['StatusItems'])
+
         return [Store(x, self.country) for x in data['Stores']
                 if x['IsOnlineNow'] and x['ServiceIsOpen'][service]]
 
