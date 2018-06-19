@@ -5,8 +5,8 @@ from hamcrest import *
 from mock import patch
 from pytest import mark
 
-from pizzapi.menu import Menu
-from pizzapi.urls import Urls, COUNTRY_USA
+from pizzapy.menu import Menu
+from pizzapy.urls import Urls, COUNTRY_USA
 
 
 fixture_path = os.path.join('tests', 'fixtures', 'menu.json')
@@ -22,6 +22,6 @@ def mocked_request_json(url, **kwargs):
     return menu_fixture
 
 
-@patch('pizzapi.address.request_json', side_effect=mocked_request_json)
+@patch('pizzapy.address.request_json', side_effect=mocked_request_json)
 def test_menu_from_store(store_id):
     pass

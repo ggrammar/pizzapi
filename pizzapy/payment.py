@@ -1,8 +1,8 @@
 import re
 
 
-class PaymentObject(object):
-    """A PaymentObject represents a credit card.
+class CreditCard(object):
+    """A CreditCard represents a credit card.
 
     There's some sweet logic in here to make sure that the type of card
     you passed is valid. 
@@ -14,6 +14,9 @@ class PaymentObject(object):
         self.expiration = str(expiration).strip()
         self.cvv = str(cvv).strip()
         self.zip = str(zip).strip()
+
+    def __repr__(self):
+        return "Credit Card with last four #{}".format(self.number[-4:])
 
     def validate(self):
         is_valid = self.number and self.card_type and self.expiration

@@ -26,6 +26,9 @@ class Address(object):
         self.urls = Urls(country)
         self.country = country
 
+    def __repr__(self):
+        return ", ".join([self.street, self.city, self.region, self.zip])
+ 
     @property
     def data(self):
         return {'Street': self.street, 'City': self.city,

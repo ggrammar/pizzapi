@@ -5,8 +5,8 @@ from hamcrest import *
 from mock import patch
 from pytest import mark
 
-from pizzapi.address import Address
-from pizzapi.urls import Urls, COUNTRY_USA
+from pizzapy.address import Address
+from pizzapy.urls import Urls, COUNTRY_USA
 
 
 fixture_path = os.path.join('tests', 'fixtures', 'stores.json')
@@ -55,7 +55,7 @@ def test_address_init(street, city, region, zip):
 
 
 @address_params
-@patch('pizzapi.address.request_json', side_effect=mocked_request_json)
+@patch('pizzapy.address.request_json', side_effect=mocked_request_json)
 def test_address_closest_store(mocked, street, city, region, zip):
     address = Address(street, city, region, zip)
     assert_that(address, has_properties(
@@ -99,7 +99,7 @@ def test_address_closest_store(mocked, street, city, region, zip):
 
 
 @address_params
-@patch('pizzapi.address.request_json', side_effect=mocked_request_json)
+@patch('pizzapy.address.request_json', side_effect=mocked_request_json)
 def test_address_nearby_stores(mocked, street, city, region, zip):
     address = Address(street, city, region, zip)
     assert_that(address, has_properties(

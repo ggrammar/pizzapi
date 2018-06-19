@@ -105,7 +105,7 @@ class Menu(object):
             if all(y in v.get(x, '') for x, y in conditions.items()):
                 print(v['Code'], end=' ')
                 print(v['Name'], end=' ')
-                print('$' + v['Price'], end=' ')
-                print(v['SizeCode'], end=' ')
-                print(v['ProductCode'], end=' ')
-                print(v['Toppings'])
+                print('$' + v['Price'])
+                #print(v['SizeCode'], end=' ')
+                #print(v['ProductCode'], end=' ')
+                #print(v['Toppings'])

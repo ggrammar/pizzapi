@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-# pizzapi documentation build configuration file, created by
+# pizzapy documentation build configuration file, created by
 # sphinx-quickstart on Sun Feb  4 22:05:18 2018.
 #
 # This file is execfile()d with the current directory set to its
@@ -47,7 +47,7 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = u'pizzapi'
+project = u'pizzapy'
 copyright = u'2018, Arie van Luttikhuizen, Grant Gordon'
 author = u'Arie van Luttikhuizen, Grant Gordon'
 
@@ -113,7 +113,7 @@ html_sidebars = {
 # -- Options for HTMLHelp output ------------------------------------------
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'pizzapidoc'
+htmlhelp_basename = 'pizzapydoc'
 
 
 # -- Options for LaTeX output ---------------------------------------------
@@ -140,7 +140,7 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-    (master_doc, 'pizzapi.tex', u'pizzapi Documentation',
+    (master_doc, 'pizzapy.tex', u'pizzapy Documentation',
      u'Arie van Luttikhuizen, Grant Gordon', 'manual'),
 ]
 
@@ -150,7 +150,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    (master_doc, 'pizzapi', u'pizzapi Documentation',
+    (master_doc, 'pizzapy', u'pizzapy Documentation',
      [author], 1)
 ]
 
@@ -161,8 +161,8 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-    (master_doc, 'pizzapi', u'pizzapi Documentation',
-     author, 'pizzapi', 'One line description of project.',
+    (master_doc, 'pizzapy', u'pizzapy Documentation',
+     author, 'pizzapy', 'One line description of project.',
      'Miscellaneous'),
 ]
 

@@ -62,7 +62,7 @@ class PublishCommand(Command):
 
 # Where the magic happens:
 setup(
-    name='pizzapi',
+    name='pizzapy',
 
     # Versions should comply with PEP440.  For a discussion on single-sourcing
     # the version across setup.py and the project code, see
@@ -73,7 +73,7 @@ setup(
     long_description=long_description,
 
     # The project's main homepage.
-    url='https://github.com/aluttik/pizzapi',
+    url='https://github.com/aluttik/pizzapy',
 
     # Author details
     author='aluttik',
@@ -121,7 +121,7 @@ setup(
     # pip to create the appropriate form of executable for the target platform.
     # entry_points={
     #     'console_scripts': [
-    #         'pizzapi=pizzapi:main'
+    #         'pizzapy=pizzapy:main'
     #     ],
     # },
 

@@ -1,5 +1,22 @@
-pizzapi
+pizzapy
 =======
+
+Disclaimer
+-----------
+This is my fork of https://github.com/gamagori/pizzapi
+It's heavily modified and not well documented, but i'm going to get to that. the below example should work though.
+
+sorry! was kind of in a rush this morning.
+
+Setup
+-----
+
+1. install python3
+2. download this repository
+3. install the requirements of the repository `pip install -r requirements.txt`
+4. start a python3 interpreter inside of the folder called pizzapy
+5. have fun
+
 
 Description
 -----------
@@ -16,14 +33,12 @@ First construct a ``Customer`` object and set the customer's address:
 .. code-block:: python
 
     customer = Customer('Barack', 'Obama', 'barack@whitehouse.gov', '2024561111', '700 Pennsylvania Avenue NW, Washington, DC, 20408')
-    address = Address('700 Pennsylvania Avenue NW', 'Washington', 'DC', '20408')
-    # or Address(*customer.address.split(',')) if you're lazy
 
 Then, find a store that will deliver to the address.
 
 .. code-block:: python
 
-    store = address.closest_store()
+    my_local_dominos = StoreLocator.find_closest_store_to_customer(customer)
 
 In order to add items to your order, you'll need the items' product codes.
 To find the codes, get the menu from the store, then search for items you want to add.
@@ -53,7 +68,7 @@ After you've found your items' product codes, you can create an ``Order`` object
 
 .. code-block:: python
 
-    order = Order(store, customer, address)
+    order = Order.begin_customer_order(customer, my_local_dominos)
     order.add_item('P12IPAZA') # add a 12-inch pan pizza
     order.add_item('MARINARA') # with an extra marinara cup
     order.add_item('20BCOKE')  # and a 20oz bottle of coke
@@ -64,20 +79,15 @@ You can remove items as well!
 
     order.remove_item('20BCOKE')
 
-Wrap your credit card information in a ``PaymentObject``:
+Wrap your credit card information in a ``CreditCard``:
 
 .. code-block:: python
 
-    card = PaymentObject('4100123422343234', '0115', '777', '90210')
+    card = CreditCard('4100123422343234', '0115', '777', '90210')
 
 And that's it! Now you can place your order.
 
 .. code-block:: python
 
     order.place(card)
-
-Or if you're just testing and don't want to actually order something, use ``.pay_with``.
-
-.. code-block:: python
-
-    order.pay_with(card)
+    my_local_dominos.place_order(order, card)
