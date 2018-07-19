@@ -46,7 +46,7 @@ You can do this by asking your ``Store`` object for its ``Menu``.
 
 .. code-block:: python
 
-    menu = store.get_menu()
+    menu = my_local_dominos.get_menu()
 
 Then search ``menu`` with ``menu.search``. For example, running this command:
 
