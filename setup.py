@@ -113,7 +113,7 @@ setup(
 
     # You can just specify the packages manually here if your project is
     # simple. Or you can use find_packages().
-    packages=find_packages(exclude=['tests']),
+    packages=find_packages(),
 
     # TODO: Add a command line tool
     # To provide executable scripts, use entry points in preference to the
@@ -139,6 +139,7 @@ setup(
         'mock',
         'pytest',
     ],
+    setup_requires=["pytest-runner"],
 
     # setup.py publish support.
     cmdclass={
