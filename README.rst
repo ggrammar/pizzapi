@@ -11,7 +11,13 @@ It's a port of `the pizzapi node.js module <https://github.com/RIAEvangelist/nod
 Quick Start
 -----------
 
-First construct a ``Customer`` object and set the customer's address:
+Pull the module into your namespace:
+
+.. code-block:: python
+
+    from pizzapi import *
+
+First, construct a ``Customer`` object and set the customer's address:
 
 .. code-block:: python
 
