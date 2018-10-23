@@ -21,8 +21,8 @@ First, construct a ``Customer`` object and set the customer's address:
 
 .. code-block:: python
 
-    customer = Customer('Barack', 'Obama', 'barack@whitehouse.gov', '2024561111')
-    address = Address('34523 S. Greenwood Ave', 'Chicago', 'IL', '60786')
+    customer = Customer('Donald', 'Trump', 'donald@whitehouse.gov', '2024561111')
+    address = Address('700 Pennsylvania Avenue NW', 'Washington', 'DC', '20408')
 
 Then, find a store that will deliver to the address.
 
