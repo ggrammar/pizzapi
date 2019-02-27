@@ -86,7 +86,9 @@ class Menu(object):
                 for subcategory in category.subcategories:
                     print_category(subcategory, depth + 1)
                 for product in category.products:
-                    print(indent + "  [%s]" % product.code, product.name)
+                    print(indent + "  [%s]" % product.code,
+                          product.name.encode('ascii',
+                                              'ignore').decode('ascii'))
         print("************ Coupon Menu ************")
         print_category(self.root_categories['Coupons'])
         print("\n************ Preconfigured Menu ************")
@@ -104,7 +106,7 @@ class Menu(object):
             v['Toppings'] = dict(x.split('=', 1) for x in v['Tags']['DefaultToppings'].split(',') if x)
             if all(y in v.get(x, '') for x, y in conditions.items()):
                 print(v['Code'], end=' ')
-                print(v['Name'], end=' ')
+                print(v['Name'].encode('ascii', 'ignore').decode('ascii'), end=' ')
                 print('$' + v['Price'], end=' ')
                 print(v['SizeCode'], end=' ')
                 print(v['ProductCode'], end=' ')
