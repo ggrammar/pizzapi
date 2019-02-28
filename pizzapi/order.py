@@ -49,7 +49,7 @@ class Order(object):
         return self.data['Products'].pop(codes.index(code))
 
     def add_coupon(self, code, qty=1):
-        item = self.menu.variants[code]
+        item = self.menu.coupons[code]
         item.update(ID=1, isNew=True, Qty=qty, AutoRemove=False)
         self.data['Coupons'].append(item)
         return item
