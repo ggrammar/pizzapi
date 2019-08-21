@@ -1,12 +1,14 @@
 version: 2
 jobs:
-        build:
-                working_directory: ~/pizzapi
-                docker:
-                        - image: circleci/python:2.7.16
-        steps:
-                - checkout
-                - run:
-                        command: |
-                                python setup.py test
-                                python setup.py install
+  build:
+    working_directory: ~/pizzapi
+    docker:
+      - image: circleci/python:2.7.16
+    steps:
+      - checkout
+      - run:
+          command: |
+            python setup.py test
+            python setup.py install
+      - store_test_results:
+          path: test-results
