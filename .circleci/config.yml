@@ -9,5 +9,4 @@ jobs:
                 - run:
                         command: |
                                 python setup.py test
-                        command: |
                                 python setup.py install
