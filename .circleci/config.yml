@@ -1,4 +1,4 @@
-version: 1
+version: 2
 jobs:
         build:
                 working_directory: ~/pizzapi
