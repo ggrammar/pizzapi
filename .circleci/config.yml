@@ -3,7 +3,7 @@ jobs:
   build:
     working_directory: ~/pizzapi
     docker:
-      - image: circleci/python:2.7.16
+      - image: circleci/python:3.6.4
     steps:
       - checkout
       - run:
