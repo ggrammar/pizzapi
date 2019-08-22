@@ -7,6 +7,7 @@ workflows:
             tags:
               only: /.*/
       - deploy:
+          context: GRAMMAR_PYPI_PASS
           requires:
             - build
           filters:
