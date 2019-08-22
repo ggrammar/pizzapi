@@ -49,13 +49,7 @@ jobs:
           command: |
             python setup.py sdist
       - run:
-          name: create .pypirc
-          command: |
-            echo -e "[pypi]" >> ~/.pypirc
-            echo -e "username = grammar" >> ~/.pypirc
-            echo -e "password = $GRAMMAR_PYPI_PASSWORD" >> ~/.pypirc
-      - run:
           name: upload to pypi
           command: |
-            python -m twine upload --repository-url https://pypi.org dist/*
+            python -m twine upload --repository-url https://pypi.org dist/* --username grammar --password $GRAMMAR_PYPI_PASSWORD
 
