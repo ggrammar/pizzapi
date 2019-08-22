@@ -4,8 +4,16 @@ jobs:
     working_directory: ~/pizzapi
     docker:
       - image: circleci/python:3.6.4
+        environment:
+          PIPENV_VENV_IN_PROJET: true
     steps:
       - checkout
+      - run: sudo chown -R circleci:circleci /usr/local/bin
+      - run: sudo chown -R circleci:circleci /usr/local/lib/python3.6/site-packages
+      - run:
+          command: |
+            sudo pip install pipenv
+            pipenv install
       - run:
           command: |
             python setup.py test
