@@ -54,5 +54,5 @@ jobs:
       - run:
           name: upload to pypi
           command: |
-            python -m twine upload dist/* --username grammar --password $GRAMMAR_PYPI_PASSWORD
+            python -m twine upload --username grammar --password $GRAMMAR_PYPI_PASSWORD dist/*
 
