@@ -37,6 +37,8 @@ jobs:
   deploy:
     docker:
       - image: circleci/python:3.6
+        environment:
+          GRAMMAR_PYPI_PASSWORD: $GRAMMAR_PYPI_PASSWORD
     steps:
       - checkout
       - run:
