@@ -1,4 +1,18 @@
-version: 2
+version: 2.1
+workflows:
+  build_and_deploy:
+    jobs:
+      - build:
+          filters:
+            tags:
+              only: /.*/
+      - deploy:
+          requires:
+            - build
+          filters:
+            branches:
+              only:
+                - master
 jobs:
   build:
     docker:
@@ -43,18 +57,4 @@ jobs:
           name: upload to pypi
           command: |
             python -m twine --repository-url https://pypi.org upload dist/*
-workflows:
-  build_and_deploy:
-    jobs:
-      - build:
-          filters:
-            tags:
-              only: /.*/
-      - deploy:
-          requires:
-            - build
-          filters:
-            branches:
-              only:
-                - master
-            
+
