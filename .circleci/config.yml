@@ -1,0 +1,60 @@
+version: 2.1
+workflows:
+  build_and_deploy:
+    jobs:
+      - build:
+          filters:
+            tags:
+              only: /.*/
+      - deploy:
+          requires:
+            - build
+          filters:
+            branches:
+              only:
+                - master
+jobs:
+  build:
+    docker:
+      - image: circleci/python:3.6
+        environment:
+          PIPENV_VENV_IN_PROJET: true
+    steps:
+      - checkout
+      - run: sudo chown -R circleci:circleci /usr/local/bin
+      - run: sudo chown -R circleci:circleci /usr/local/lib/python3.6/site-packages
+      - run:
+          command: |
+            sudo pip install pipenv
+            pipenv install
+      - run:
+          command: |
+            python setup.py test
+            python setup.py install
+      - store_test_results:
+          path: test-results
+  deploy:
+    docker:
+      - image: circleci/python:3.6
+    steps:
+      - checkout
+      - run:
+          name: install python dependencies
+          command: |
+            sudo pip install pipenv
+            pipenv install
+      - run:
+          name: create sdist package
+          command: |
+            python setup.py sdist
+      - run:
+          name: create .pypirc
+          command: |
+            echo -e "[pypi]" >> ~/.pypirc
+            echo -e "username = grammar" >> ~/.pypirc
+            echo -e "password = $GRAMMAR_PYPI_PASSWORD" >> ~/.pypirc
+      - run:
+          name: upload to pypi
+          command: |
+            python -m twine --repository-url https://pypi.org upload dist/*
+
