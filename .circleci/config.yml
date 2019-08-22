@@ -42,6 +42,7 @@ jobs:
           name: install python dependencies
           command: |
             sudo pip install pipenv
+            sudo pip install twine
             pipenv install
       - run:
           name: create sdist package
@@ -56,5 +57,5 @@ jobs:
       - run:
           name: upload to pypi
           command: |
-            python -m twine --repository-url https://pypi.org upload dist/*
+            python -m twine upload --repository-url https://pypi.org dist/*
 
