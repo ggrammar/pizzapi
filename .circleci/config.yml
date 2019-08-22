@@ -53,8 +53,6 @@ jobs:
             python setup.py sdist
       - run:
           name: upload to pypi
-          environment:
-            GRAMMAR_PYPI_PASSWORD: $GRAMMAR_PYPI_PASSWORD
           command: |
             python -m twine upload --username grammar --password $GRAMMAR_PYPI_PASSWORD dist/*
 
