@@ -9,9 +9,14 @@ from pizzapi.address import Address
 from pizzapi.urls import Urls, COUNTRY_USA
 
 
-fixture_path = os.path.join('tests', 'fixtures', 'stores.json')
-with open(fixture_path) as fp:
+# TODO: Is there a cleaner way to load fixtures?
+store_fixture_path = os.path.join('tests', 'fixtures', 'stores.json')
+with open(store_fixture_path) as fp:
     stores_fixture = json.load(fp)
+
+failure_fixture_path = os.path.join('tests', 'fixtures', 'stores_failure.json')
+with open(failure_fixture_path) as fp:
+    failure_fixture = json.load(fp)
 
 
 address_params = mark.parametrize(
@@ -19,21 +24,69 @@ address_params = mark.parametrize(
     argvalues=[
         ('700 Pennsylvania Avenue NW', 'Washington', 'DC', '20408'),
         ('700 Pennsylvania Avenue NW ', ' Washington ', ' DC ', ' 20408 '),
-        ('700 Pennsylvania Avenue NW', 'Washington', 'DC', 20408)
+        ('700 Pennsylvania Avenue NW', 'Washington', 'DC', 20408),
     ]
 )
 
+# TODO: Does pytest offer a combinatorics plugin? This is messy. 
+missing_address_params = mark.parametrize(
+    argnames=('street', 'city', 'region', 'zip'),
+    argvalues=[
+        # All values are present, but commented ones should pass.
+        # AKA, anything with a ZIP, or with enough info to get stores.
+        ('', '', '', ''),
+        ('700 Pennsylvania Avenue NW', '', '', ''),
+        ('', 'Washington', '', ''),
+        ('', '', 'DC', ''),
+        # ('', '', '', '20408'),
+        ('700 Pennsylvania Avenue NW', 'Washington', '', ''),
+        ('700 Pennsylvania Avenue NW', '', 'DC', ''),
+        # ('700 Pennsylvania Avenue NW', '', '', '20408'),
+        # ('', 'Washington', 'DC', ''), 
+        # ('', 'Washington', '', '20408'),
+        # ('', '', 'DC', '20408'),
+        # ('', 'Washington', 'DC', '20408'),
+        # ('700 Pennsylvania Avenue NW', '', 'DC', '20408'),
+        # ('700 Pennsylvania Avenue NW', 'Washington', '', '20408'),
+        # ('700 Pennsylvania Avenue NW', 'Washington', 'DC', ''),
+        # ('700 Pennsylvania Avenue NW', 'Washington', 'DC', '20408'),
+    ]
+)
 
 def mocked_request_json(url, **kwargs):
+    # We have to have the API rejection logic in here, since we're not
+    # actually going to query the API. Determining whether or not the
+    # API would reject a paramter set was an experiment, and may not
+    # reflect the current state of the API. 
+    # This would be sweet to automate - programmatically determine the
+    # behavior of a foreign API, and reflect that in test fixtures.
 
-    assert_that(url, equal_to(Urls(COUNTRY_USA).find_url()))
-    assert_that(kwargs, has_entries(
-        line1='700 Pennsylvania Avenue NW',
-        line2='Washington, DC, 20408',
-        type='Delivery'
-    ))
-    return stores_fixture
+    # This mock isn't great, has built-in assumptions about kwargs. 
+    street_address = str(kwargs['line1'])
+    city = str(kwargs['line2'].split(',')[0])
+    region = str(kwargs['line2'].split(',')[1])
+    postalcode = str(kwargs['line2'].split(',')[2])
 
+    print(street_address, city, region, postalcode)
+    # return stores_fixture
+
+    # if city and region are present, pass no matter what
+    if (len(city) > 2) and (len(region) > 2):
+        return stores_fixture
+
+    # if ZIP is present, pass
+    if len(postalcode) > 3:
+        return stores_fixture
+
+    # if street address, only pass if city and region are present
+    if (len(street_address) > 2):
+        if (len(city) > 2) and (len(region) > 2):
+            return stores_fixture
+        # or if zip is present
+        elif len(postalcode) > 3:
+            return stores_fixture
+    else:
+        return failure_fixture
 
 @address_params
 def test_address_init(street, city, region, zip):
@@ -111,6 +164,11 @@ def test_address_nearby_stores(mocked, street, city, region, zip):
     assert_that(stores, has_length(12))
     assert_that([x.data for x in stores], equal_to(stores_fixture['Stores']))
 
+@missing_address_params
+@patch('pizzapi.address.request_json', side_effect=mocked_request_json)
+def test_address_nearby_stores_failure(mocked, street, city, region, zip):
+    address = Address(street, city, region, zip)
+    assert_that(calling(address.nearby_stores), raises(Exception))
 
 # print 'Creating Order...'
 # order = Order(store, customer)
