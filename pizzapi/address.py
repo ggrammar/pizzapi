@@ -48,7 +48,10 @@ class Address(object):
         """
         data = request_json(self.urls.find_url(), line1=self.line1, line2=self.line2, type=service)
         return [Store(x, self.country) for x in data['Stores']
-                if x['IsOnlineNow'] and x['ServiceIsOpen'][service]]
+                if x['IsDeliveryStore'] and x['IsOnlineNow'] and x['ServiceIsOpen'][service]]\
+                if service == 'Delivery' else\
+                [Store(x, self.country) for x in data['Stores']
+                 if x['IsOnlineNow'] and x['ServiceIsOpen'][service]]
 
     def closest_store(self, service='Delivery'):
         stores = self.nearby_stores(service=service)
