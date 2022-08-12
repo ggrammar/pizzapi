@@ -21,7 +21,7 @@ First, construct a ``Customer`` object and set the customer's address:
 
 .. code-block:: python
 
-    customer = Customer('Donald', 'Trump', 'donald@whitehouse.gov', '2024561111')
+    customer = Customer('Joseph', 'Biden', 'president@whitehouse.gov', '2024561111')
     address = Address('700 Pennsylvania Avenue NW', 'Washington', 'DC', '20408')
 
 Then, find a store that will deliver to the address.
@@ -73,6 +73,7 @@ Wrap your credit card information in a ``PaymentObject``:
 
 .. code-block:: python
 
+    # Card information - Card Number, Expiration Date, Security code, and Zip code
     card = PaymentObject('4100123422343234', '0115', '777', '90210')
 
 And that's it! Now you can place your order.
